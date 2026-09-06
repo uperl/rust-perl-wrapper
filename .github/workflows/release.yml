@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+
+concurrency: release-${{ github.ref }}
+
+
+permissions:
+  contents: write
+
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - id: release
+        uses: uperl/action-rust-release-lib@v1
+        with:
+          create-release: true
+

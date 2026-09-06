@@ -1,0 +1,12 @@
+[package]
+name = "perl-wrapper"
+version = "0.1.0"
+edition = "2024"
+description = "Wrapper for running Perl executable."
+repository = "https://github.com/uperl/perl-wrapper"
+license = "MIT"
+
+[dependencies]
+anyhow = "1.0.104"
+
+
