@@ -1,6 +1,6 @@
 [package]
 name = "perl-wrapper"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "Wrapper for running Perl executable."
 repository = "https://github.com/uperl/perl-wrapper"
@@ -8,5 +8,7 @@ license = "MIT"
 
 [dependencies]
 anyhow = "1.0.104"
+os_pipe = "1"
+which = "8"
 
 
