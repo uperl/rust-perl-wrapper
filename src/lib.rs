@@ -1178,10 +1178,9 @@ mod tests {
         // A second call returns the same cached data.
         assert_eq!(perl.inc(), first.as_slice());
 
-        let arch = perl.archname().expect("archname reported");
-        assert!(!arch.is_empty());
-        // The arch dir generally sits on @INC.
-        assert!(first.iter().any(|dir| dir.ends_with(arch)), "{first:?}");
+        // `archname` is reported and non-empty (its exact spelling and how it
+        // relates to the @INC layout varies by build, e.g. Debian multiarch).
+        assert!(!perl.archname().expect("archname reported").is_empty());
 
         let _ = fs::remove_dir_all(&root);
     }
