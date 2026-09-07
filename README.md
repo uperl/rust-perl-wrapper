@@ -21,3 +21,25 @@ let perl = Perl::new()?
 let result = perl.execute_perl(["-e", "print qq{hello\\n}"])?;
 assert!(result.is_success);
 ```
+
+`module("Foo::Bar")` reports whether a module is installed without loading it.
+It searches `lib`, the `local::lib` layout under `install_base`, and the
+interpreter's `@INC`, returning `None` when nothing matches or `Some(Module)`
+with the module name, the full path to its `.pm` file, and the version read from
+the source (`None` when the module declares none). The module is never compiled
+or run — the version is recovered by scanning the source for a `$VERSION`
+assignment or `package NAME VERSION` statement.
+
+```rust
+use perl_wrapper::Perl;
+
+let perl = Perl::new()?;
+if let Some(m) = perl.module("Data::Dumper") {
+    println!("{} {:?} at {}", m.name, m.version, m.path.display());
+}
+```
+
+`inc()` and `archname()` return the interpreter's effective `@INC` (with `lib`
+prepended, as `PERL5LIB` puts it there) and its `$Config{archname}`. Both run
+`perl` once through `execute_perl`, parse the captured output, and cache the
+result on the `Perl` value, so repeated calls are free.
